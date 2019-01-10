@@ -51,38 +51,52 @@ public class DescriptorFileReader {
             String fileString = FileUtils.readFileToString(new File(descriptorFilePath));
             OMElement xmlFile = AXIOMUtil.stringToOM(fileString);
 
-            QName qName1 = new QName("", "set-inputXmlPayload", "");
-            OMElement inputXmlPayload1 = xmlFile.getFirstChildWithName(qName1);
-            inputXmlPayload2 = inputXmlPayload1.getText();
+            QName qName = new QName("", "NoOfTestSuits", "");
+            OMElement noOfTestSuits = xmlFile.getFirstChildWithName(qName);
+            int noofTestSuits = Integer.parseInt(noOfTestSuits.getText());
 
-            QName qName2 = new QName("", "artifactIdString", "");
-            OMElement artifactId1 = xmlFile.getFirstChildWithName(qName2);
+            QName qName1 = new QName("", "artifactIdString", "");
+            OMElement artifactId1 = xmlFile.getFirstChildWithName(qName1);
             artifactId2 = artifactId1.getText();
 
-            QName qName3 = new QName("", "fileName", "");
-            OMElement fileName1 = xmlFile.getFirstChildWithName(qName3);
-            fileName2 = fileName1.getText();
+            for (int x=1; x<=noofTestSuits; x++) {
+                String testSuit = "testSuit" + x;
+                log.info(testSuit);
 
-            QName qName4 = new QName("", "properties", "");
-            OMElement properties1 = xmlFile.getFirstChildWithName(qName4);
-            properties2 = properties1.getText();
+                QName qName2 = new QName("", testSuit, "");
+                OMElement testData = xmlFile.getFirstChildWithName(qName2);
 
-            QName qName5 = new QName("", "expectedPropVal", "");
-            OMElement expectedPropVal1 = xmlFile.getFirstChildWithName(qName5);
-            expectedPropVal2 = expectedPropVal1.getText();
+                QName qName3 = new QName("", "set-inputXmlPayload", "");
+                OMElement inputXmlPayload1 = testData.getFirstChildWithName(qName3);
+                inputXmlPayload2 = inputXmlPayload1.getText();
 
-            QName qName6 = new QName("", "expectedPayload", "");
-            OMElement expectedPayload1 = xmlFile.getFirstChildWithName(qName6);
-            expectedPayload2 = expectedPayload1.getText();
+                QName qName4 = new QName("", "fileName", "");
+                OMElement fileName1 = testData.getFirstChildWithName(qName4);
+                fileName2 = fileName1.getText();
 
-            dataHolder.setInputXmlPayload(inputXmlPayload2);
-            dataHolder.setArtifactId(artifactId2);
-            dataHolder.setFileName(fileName2);
-            dataHolder.setProperties(properties2);
-            dataHolder.setExpectedPropVal(expectedPropVal2);
-            dataHolder.setExpectedPayload(expectedPayload2);
+                QName qName5 = new QName("", "properties", "");
+                OMElement properties1 = testData.getFirstChildWithName(qName5);
+                properties2 = properties1.getText();
 
-            return dataHolder;
+                QName qName6 = new QName("", "expectedPropVal", "");
+                OMElement expectedPropVal1 = testData.getFirstChildWithName(qName6);
+                expectedPropVal2 = expectedPropVal1.getText();
+
+                QName qName7 = new QName("", "expectedPayload", "");
+                OMElement expectedPayload1 = testData.getFirstChildWithName(qName7);
+                expectedPayload2 = expectedPayload1.getText();
+
+                dataHolder.setInputXmlPayload(inputXmlPayload2);
+                dataHolder.setArtifactId(artifactId2);
+                dataHolder.setFileName(fileName2);
+                dataHolder.setProperties(properties2);
+                dataHolder.setExpectedPropVal(expectedPropVal2);
+                dataHolder.setExpectedPayload(expectedPayload2);
+                dataHolder.setNoOfTestSuits(noofTestSuits);
+                log.info(noOfTestSuits);
+            }
+
+                return dataHolder;
 
         } catch (FileNotFoundException e) {
             log.error("File not found");

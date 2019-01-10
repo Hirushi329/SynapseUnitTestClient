@@ -28,6 +28,7 @@ public class TestDataHolder {
     private String properties;
     private String expectedPayload;
     private String expectedPropVal;
+    private int noOfTestSuits;
 
     public String getInputXmlPayload() {
 
@@ -87,6 +88,16 @@ public class TestDataHolder {
     public void setExpectedPropVal(String expectedPropVal) {
 
         this.expectedPropVal = expectedPropVal;
+    }
+
+    public int getNoOfTestSuits() {
+
+        return this.noOfTestSuits;
+    }
+
+    public void setNoOfTestSuits(int noOfTestSuits){
+
+        this.noOfTestSuits = noOfTestSuits;
     }
 
 }

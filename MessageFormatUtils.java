@@ -40,6 +40,13 @@ public class MessageFormatUtils {
      * @return deployMessage
      */
 
+    public static int getNumberOfTestSuits(TestDataHolder unitTestDataHolder){
+
+        int numberOfTestSuits = unitTestDataHolder.getNoOfTestSuits();
+        return numberOfTestSuits;
+
+    }
+
     public static String generateDeployMessage(TestDataHolder unitTestDataHolder) {
 
         String artifact = unitTestDataHolder.getArtifactId();
@@ -58,14 +65,15 @@ public class MessageFormatUtils {
 
     public static String generateTestDataMessage(TestDataHolder unitTestDataHolder) {
 
-        String inputXmlPayload = unitTestDataHolder.getInputXmlPayload();
-        String expectedPayload = unitTestDataHolder.getExpectedPayload();
-        String expectedPropVal = unitTestDataHolder.getExpectedPropVal();
-        String decodedInputXmlPayload = Base64.getEncoder().encodeToString(inputXmlPayload.getBytes());
-        String decodedExpectedPayload = Base64.getEncoder().encodeToString(expectedPayload.getBytes());
-        String decodedExpectedPropval = Base64.getEncoder().encodeToString(expectedPropVal.getBytes());
+            String inputXmlPayload = unitTestDataHolder.getInputXmlPayload();
+            String expectedPayload = unitTestDataHolder.getExpectedPayload();
+            String expectedPropVal = unitTestDataHolder.getExpectedPropVal();
+            String decodedInputXmlPayload = Base64.getEncoder().encodeToString(inputXmlPayload.getBytes());
+            String decodedExpectedPayload = Base64.getEncoder().encodeToString(expectedPayload.getBytes());
+            String decodedExpectedPropval = Base64.getEncoder().encodeToString(expectedPropVal.getBytes());
 
-        String testData = "|" + OPERATION + "-" + EXECUTETEST + "," + INPUTXMLPAYLOAD + "-" + decodedInputXmlPayload + "," + EXPECTEDPAYLOAD + "-" + decodedExpectedPayload + "," + EXPECTEDPROPVAL + "-" + decodedExpectedPropval + ",|";
+            String testData = "|" + OPERATION + "-" + EXECUTETEST + "," + INPUTXMLPAYLOAD + "-" + decodedInputXmlPayload + "," + EXPECTEDPAYLOAD + "-" + decodedExpectedPayload + "," + EXPECTEDPROPVAL + "-" + decodedExpectedPropval + ",|";
+
         return testData;
     }
 
