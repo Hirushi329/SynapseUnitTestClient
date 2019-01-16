@@ -55,13 +55,21 @@ public class DescriptorFileReader {
             OMElement noOfTestSuits = xmlFile.getFirstChildWithName(qName);
             int noofTestSuits = Integer.parseInt(noOfTestSuits.getText());
 
-            QName qName1 = new QName("", "artifactIdString", "");
+            QName qName1 = new QName("", "artifact", "");
             OMElement artifactId1 = xmlFile.getFirstChildWithName(qName1);
             artifactId2 = artifactId1.getText();
 
+            QName qName4 = new QName("", "fileName", "");
+            OMElement fileName1 = xmlFile.getFirstChildWithName(qName4);
+            fileName2 = fileName1.getText();
+
+            QName qName5 = new QName("", "properties", "");
+            OMElement properties1 = xmlFile.getFirstChildWithName(qName5);
+            properties2 = properties1.getText();
+
+
             for (int x=1; x<=noofTestSuits; x++) {
                 String testSuit = "testSuit" + x;
-                log.info(testSuit);
 
                 QName qName2 = new QName("", testSuit, "");
                 OMElement testData = xmlFile.getFirstChildWithName(qName2);
@@ -69,14 +77,6 @@ public class DescriptorFileReader {
                 QName qName3 = new QName("", "set-inputXmlPayload", "");
                 OMElement inputXmlPayload1 = testData.getFirstChildWithName(qName3);
                 inputXmlPayload2 = inputXmlPayload1.getText();
-
-                QName qName4 = new QName("", "fileName", "");
-                OMElement fileName1 = testData.getFirstChildWithName(qName4);
-                fileName2 = fileName1.getText();
-
-                QName qName5 = new QName("", "properties", "");
-                OMElement properties1 = testData.getFirstChildWithName(qName5);
-                properties2 = properties1.getText();
 
                 QName qName6 = new QName("", "expectedPropVal", "");
                 OMElement expectedPropVal1 = testData.getFirstChildWithName(qName6);

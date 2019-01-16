@@ -17,6 +17,8 @@
  */
 package org.wso2.SynapseUnitTestClient;
 
+import org.apache.log4j.Logger;
+
 import java.util.Base64;
 
 public class MessageFormatUtils {
@@ -32,6 +34,9 @@ public class MessageFormatUtils {
     private static final String INPUTXMLPAYLOAD = "inputXmlPayload";
     private static final String EXPECTEDPAYLOAD = "expectedPayload";
     private static final String EXPECTEDPROPVAL = "expectedPropVal";
+    private static final String FILENAME = "fileName";
+
+    private static Logger log = Logger.getLogger(MessageFormatUtils.class.getName());
 
     /**
      * Method for encrypting the artifact details and formatting the deployment message to be sent
@@ -51,7 +56,11 @@ public class MessageFormatUtils {
 
         String artifact = unitTestDataHolder.getArtifactId();
         String encodedArtifact = Base64.getEncoder().encodeToString(artifact.getBytes());
-        String deployMessage = "|" + OPERATION + "-" + DEPLOY + "," + ARTIFACT + "-" + encodedArtifact + ",|";
+        String fileName = unitTestDataHolder.getFileName();
+        log.info(fileName);
+
+        String encodedFileName = Base64.getEncoder().encodeToString(fileName.getBytes());
+        String deployMessage = "|" + OPERATION + "-" + DEPLOY + "," + ARTIFACT + "-" + encodedArtifact + "," + FILENAME + "-" + encodedFileName + ",|";
 
         return deployMessage;
     }

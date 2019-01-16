@@ -54,7 +54,7 @@ public class TestExecutor {
             }
         } else if (result.equals("Sequence is not deployed")) {
             log.info("Sequence not deployed");
-        } else log.info("Deployment result not received");
+        } else log.info("Deployment result not received:" + message);
     }
 }
 
