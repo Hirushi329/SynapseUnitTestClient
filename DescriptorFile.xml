@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<synapse-unitTest>
+    <artifact>/home/hirushi/MySequence.xml</artifact>
+    <fileName>MySequence</fileName>
+
+    <properties></properties>
+
+    <NoOfTestSuits>2</NoOfTestSuits>
+    <testSuit1>
+        <set-inputXmlPayload><![CDATA[<echoInt> xmlns=\"http://echo.services.core.carbon.wso2.org\">"
+                    + "      <!--0 to 1 occurrence-->" + "<in>35</in>" + "</echoInt>]]></set-inputXmlPayload>
+
+        <set-mocks>""</set-mocks>
+
+        <expectedPropVal><![CDATA[<?xml version='1.0' encoding='utf-8'?>" +
+            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+            "<soapenv:Body>" + inputXmlPayload +
+                "</soapenv:Body></soapenv:Envelope>]]></expectedPropVal>
+
+        <expectedPayload><![CDATA[<echoInt> xmlns=\"http://echo.services.core.carbon.wso2.org\">"
+            + "      <!--0 to 1 occurrence-->" + "<in>35</in>" + "</echoInt>]]></expectedPayload>
+    </testSuit1>
+
+    <testSuit2>
+        <set-inputXmlPayload><![CDATA[<echoInt> xmlns=\"http://echo.services.core.carbon.wso2.org\">"
+                    + "      <!--0 to 1 occurrence-->" + "<in>35</in>" + "</echoInt>]]></set-inputXmlPayload>
+
+        <set-mocks>""</set-mocks>
+
+        <expectedPropVal><![CDATA[<?xml version='1.0' encoding='utf-8'?>" +
+            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+            "<soapenv:Body>" + inputXmlPayload +
+                "</soapenv:Body></soapenv:Envelope>]]></expectedPropVal>
+
+        <expectedPayload><![CDATA[<echoInt> xmlns=\"http://echo.services.core.carbon.wso2.org\">"
+            + "      <!--0 to 1 occurrence-->" + "<in>35</in>" + "</echoInt>]]></expectedPayload>
+    </testSuit2>
+
+    <!--<testSuit3>-->
+        <!--<set-inputXmlPayload><![CDATA[<echoInt> xmlns=\"http://echo.services.core.carbon.wso2.org\">"-->
+                    <!--+ "      &lt;!&ndash;0 to 1 occurrence&ndash;&gt;" + "<in>35</in>" + "</echoInt>]]></set-inputXmlPayload>-->
+
+        <!--<set-mocks>""</set-mocks>-->
+
+        <!--<expectedPropVal><![CDATA[<?xml version='1.0' encoding='utf-8'?>" +-->
+            <!--"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">" +-->
+            <!--"<soapenv:Body>" + inputXmlPayload +-->
+                <!--"</soapenv:Body></soapenv:Envelope>]]></expectedPropVal>-->
+
+        <!--<expectedPayload><![CDATA[<echoInt> xmlns=\"http://echo.services.core.carbon.wso2.org\">"-->
+            <!--+ "      &lt;!&ndash;0 to 1 occurrence&ndash;&gt;" + "<in>35</in>" + "</echoInt>]]></expectedPayload>-->
+    <!--</testSuit3>-->
+
+</synapse-unitTest>
