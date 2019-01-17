@@ -46,10 +46,10 @@ public class TestExecutor {
             log.info(noOfTestSuits);
             for (int i=0; i<noOfTestSuits; i++) {
 
+                log.info(i);
                 String testDataMessage = MessageFormatUtils.generateTestDataMessage(uniTestDataHolder);
                 log.info("Sending test data:" + testDataMessage);
-                String unitTestResult = tcpClient.writeData(testDataMessage);
-                String finalResult = MessageFormatUtils.getResultMessage(unitTestResult);
+                String finalResult = MessageFormatUtils.getResultMessage(tcpClient.writeData(testDataMessage));
                 log.info("Unit Test Result of test suite" + i + ":" + finalResult);
             }
         } else if (result.equals("Sequence is not deployed")) {
