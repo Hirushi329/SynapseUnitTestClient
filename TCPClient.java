@@ -58,9 +58,7 @@ public class TCPClient {
             bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             printWriter.println(messageToBeSent);
-            log.info(messageToBeSent);
             String result = bufferedReader.readLine();
-            log.info(result);
             return result;
 
         } catch (IOException e) {

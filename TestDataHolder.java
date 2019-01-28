@@ -23,12 +23,13 @@ package org.wso2.SynapseUnitTestClient;
 public class TestDataHolder {
 
     private String inputXmlPayload;
-    private String artifactId;
+    private String artifact;
     private String filename;
     private String properties;
     private String expectedPayload;
     private String expectedPropVal;
-    private int noOfTestSuits;
+    private String artifactType;
+    private int noOfTestCases;
 
     public String getInputXmlPayload() {
 
@@ -40,14 +41,24 @@ public class TestDataHolder {
         this.inputXmlPayload = inputXmlPayload;
     }
 
-    public String getArtifactId() {
+    public String getArtifact() {
 
-        return this.artifactId;
+        return this.artifact;
     }
 
-    public void setArtifactId(String artifactId) {
+    public void setArtifact(String artifact) {
 
-        this.artifactId = artifactId;
+        this.artifact = artifact;
+    }
+
+    public String getArtifactType() {
+
+        return this.artifactType;
+    }
+
+    public void setArtifactType(String artifactType) {
+
+        this.artifactType = artifactType;
     }
 
     public String getFileName() {
@@ -90,14 +101,14 @@ public class TestDataHolder {
         this.expectedPropVal = expectedPropVal;
     }
 
-    public int getNoOfTestSuits() {
+    public int getNoOfTestCases() {
 
-        return this.noOfTestSuits;
+        return this.noOfTestCases;
     }
 
-    public void setNoOfTestSuits(int noOfTestSuits){
+    public void setNoOfTestCases(int noOfTestSuits){
 
-        this.noOfTestSuits = noOfTestSuits;
+        this.noOfTestCases = noOfTestSuits;
     }
 
 }

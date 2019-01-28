@@ -36,14 +36,15 @@ public class DescriptorFileReader {
     private static Logger log = Logger.getLogger(DescriptorFileReader.class.getName());
     TestDataHolder dataHolder = new TestDataHolder();
 
-    public String inputXmlPayload2 = null;
-    public String artifactId2 = null;
-    public String fileName2 = null;
-    public String properties2 = null;
-    public String expectedPropVal2 = null;
-    public String expectedPayload2 = null;
+    public String inputXmlPayload = null;
+    public String artifact = null;
+    public String fileName = null;
+    public String properties = null;
+    public String expectedPropVal = null;
+    public String expectedPayload = null;
+    public String artifactType = null;
 
-    public TestDataHolder readDescriptorFile(String descriptorFilePath) {
+    public TestDataHolder readArtifactData(String descriptorFilePath) {
 
         BasicConfigurator.configure();
 
@@ -51,52 +52,73 @@ public class DescriptorFileReader {
             String fileString = FileUtils.readFileToString(new File(descriptorFilePath));
             OMElement xmlFile = AXIOMUtil.stringToOM(fileString);
 
-            QName qName = new QName("", "NoOfTestSuits", "");
-            OMElement noOfTestSuits = xmlFile.getFirstChildWithName(qName);
-            int noofTestSuits = Integer.parseInt(noOfTestSuits.getText());
+            QName qName = new QName("", "NoOfTestCases", "");
+            OMElement noOfTestCases = xmlFile.getFirstChildWithName(qName);
+            int noofTestCases = Integer.parseInt(noOfTestCases.getText());
 
             QName qName1 = new QName("", "artifact", "");
-            OMElement artifactId1 = xmlFile.getFirstChildWithName(qName1);
-            artifactId2 = artifactId1.getText();
+            OMElement artifact1 = xmlFile.getFirstChildWithName(qName1);
+            artifact = artifact1.getText();
 
-            QName qName4 = new QName("", "fileName", "");
-            OMElement fileName1 = xmlFile.getFirstChildWithName(qName4);
-            fileName2 = fileName1.getText();
+            QName qName2 = new QName("", "artifactType", "");
+            OMElement artifactType1 = xmlFile.getFirstChildWithName(qName2);
+            artifactType = artifactType1.getText();
 
-            QName qName5 = new QName("", "properties", "");
-            OMElement properties1 = xmlFile.getFirstChildWithName(qName5);
-            properties2 = properties1.getText();
+            QName qName3 = new QName("", "fileName", "");
+            OMElement fileName1 = xmlFile.getFirstChildWithName(qName3);
+            fileName = fileName1.getText();
 
+            QName qName4 = new QName("", "properties", "");
+            OMElement properties1 = xmlFile.getFirstChildWithName(qName4);
+            properties = properties1.getText();
 
-            for (int x=1; x<=noofTestSuits; x++) {
-                String testSuit = "testSuit" + x;
+            dataHolder.setArtifact(artifact);
+            dataHolder.setArtifactType(artifactType);
+            dataHolder.setFileName(fileName);
+            dataHolder.setProperties(properties);
+            dataHolder.setNoOfTestCases(noofTestCases);
 
-                QName qName2 = new QName("", testSuit, "");
-                OMElement testData = xmlFile.getFirstChildWithName(qName2);
+            return dataHolder;
 
-                QName qName3 = new QName("", "set-inputXmlPayload", "");
-                OMElement inputXmlPayload1 = testData.getFirstChildWithName(qName3);
-                inputXmlPayload2 = inputXmlPayload1.getText();
+        } catch (FileNotFoundException e) {
+            log.error("File not found");
+        } catch (XMLStreamException e) {
+            log.error(e);
+        } catch (IOException e) {
+            log.error(e);
+        }
+        return null;
+    }
 
-                QName qName6 = new QName("", "expectedPropVal", "");
-                OMElement expectedPropVal1 = testData.getFirstChildWithName(qName6);
-                expectedPropVal2 = expectedPropVal1.getText();
+    public TestDataHolder readTestCaseData(String descriptorFilePath, int x) {
 
-                QName qName7 = new QName("", "expectedPayload", "");
-                OMElement expectedPayload1 = testData.getFirstChildWithName(qName7);
-                expectedPayload2 = expectedPayload1.getText();
+        try {
+            String fileString = FileUtils.readFileToString(new File(descriptorFilePath));
+            OMElement xmlFile = AXIOMUtil.stringToOM(fileString);
 
-                dataHolder.setInputXmlPayload(inputXmlPayload2);
-                dataHolder.setArtifactId(artifactId2);
-                dataHolder.setFileName(fileName2);
-                dataHolder.setProperties(properties2);
-                dataHolder.setExpectedPropVal(expectedPropVal2);
-                dataHolder.setExpectedPayload(expectedPayload2);
-                dataHolder.setNoOfTestSuits(noofTestSuits);
-                log.info(noOfTestSuits);
-            }
+            String testCase = "testCase" + x;
+            log.info(testCase);
 
-                return dataHolder;
+            QName qName5 = new QName("", testCase, "");
+            OMElement testData = xmlFile.getFirstChildWithName(qName5);
+
+            QName qName6 = new QName("", "set-inputXmlPayload", "");
+            OMElement inputXmlPayload1 = testData.getFirstChildWithName(qName6);
+            inputXmlPayload = inputXmlPayload1.getText();
+
+            QName qName7 = new QName("", "expectedPropVal", "");
+            OMElement expectedPropVal1 = testData.getFirstChildWithName(qName7);
+            expectedPropVal = expectedPropVal1.getText();
+
+            QName qName8 = new QName("", "expectedPayload", "");
+            OMElement expectedPayload1 = testData.getFirstChildWithName(qName8);
+            expectedPayload = expectedPayload1.getText();
+
+            dataHolder.setInputXmlPayload(inputXmlPayload);
+            dataHolder.setExpectedPropVal(expectedPropVal);
+            dataHolder.setExpectedPayload(expectedPayload);
+
+            return dataHolder;
 
         } catch (FileNotFoundException e) {
             log.error("File not found");

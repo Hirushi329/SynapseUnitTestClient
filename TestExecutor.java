@@ -33,30 +33,30 @@ public class TestExecutor {
         String port = args[2];
 
         DescriptorFileReader descriptorFileReader = new DescriptorFileReader();
-        TestDataHolder uniTestDataHolder = descriptorFileReader.readDescriptorFile(descriptorFilePath);
+        TestDataHolder uniTestDataHolder = descriptorFileReader.readArtifactData(descriptorFilePath);
         TCPClient tcpClient = new TCPClient(synapseHost, port);
 
         String deploymentMessage = MessageFormatUtils.generateDeployMessage(uniTestDataHolder);
         String result = tcpClient.writeData(deploymentMessage);
         String message = MessageFormatUtils.getResultMessage(result);
 
-        if (message.equals("Sequence is deployed successfully")) {
+        if (message.equals("Artifact is deployed successfully")) {
 
-            int noOfTestSuits = MessageFormatUtils.getNumberOfTestSuits(uniTestDataHolder);
-            log.info(noOfTestSuits);
-            for (int i=0; i<noOfTestSuits; i++) {
+            int noOfTestCases = MessageFormatUtils.getNumberOfTestCases(uniTestDataHolder);
+            log.info(noOfTestCases);
 
-                log.info(i);
+            for (int i = 1; i <= noOfTestCases; i++) {
+                uniTestDataHolder = descriptorFileReader.readTestCaseData(descriptorFilePath, i);
                 String testDataMessage = MessageFormatUtils.generateTestDataMessage(uniTestDataHolder);
                 log.info("Sending test data:" + testDataMessage);
                 String finalResult = MessageFormatUtils.getResultMessage(tcpClient.writeData(testDataMessage));
                 log.info("Unit Test Result of test suite" + i + ":" + finalResult);
             }
+
         } else if (result.equals("Sequence is not deployed")) {
             log.info("Sequence not deployed");
         } else log.info("Deployment result not received:" + message);
     }
 }
-
 
 

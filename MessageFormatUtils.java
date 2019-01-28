@@ -35,6 +35,7 @@ public class MessageFormatUtils {
     private static final String EXPECTEDPAYLOAD = "expectedPayload";
     private static final String EXPECTEDPROPVAL = "expectedPropVal";
     private static final String FILENAME = "fileName";
+    private static final String ARTIFACTTYPE = "artifactType";
 
     private static Logger log = Logger.getLogger(MessageFormatUtils.class.getName());
 
@@ -45,22 +46,20 @@ public class MessageFormatUtils {
      * @return deployMessage
      */
 
-    public static int getNumberOfTestSuits(TestDataHolder unitTestDataHolder){
+    public static int getNumberOfTestCases(TestDataHolder unitTestDataHolder){
 
-        int numberOfTestSuits = unitTestDataHolder.getNoOfTestSuits();
-        return numberOfTestSuits;
-
+        return unitTestDataHolder.getNoOfTestCases();
     }
 
     public static String generateDeployMessage(TestDataHolder unitTestDataHolder) {
 
-        String artifact = unitTestDataHolder.getArtifactId();
+        String artifact = unitTestDataHolder.getArtifact();
         String encodedArtifact = Base64.getEncoder().encodeToString(artifact.getBytes());
         String fileName = unitTestDataHolder.getFileName();
-        log.info(fileName);
-
         String encodedFileName = Base64.getEncoder().encodeToString(fileName.getBytes());
-        String deployMessage = "|" + OPERATION + "-" + DEPLOY + "," + ARTIFACT + "-" + encodedArtifact + "," + FILENAME + "-" + encodedFileName + ",|";
+        String artifactType = unitTestDataHolder.getArtifactType();
+        String encodedArtifactType = Base64.getEncoder().encodeToString(artifactType.getBytes());
+        String deployMessage = "|" + OPERATION + "-" + DEPLOY + "," + ARTIFACT + "-" + encodedArtifact + "," + FILENAME + "-" + encodedFileName + "," + ARTIFACTTYPE + "-" + encodedArtifactType + ",|";
 
         return deployMessage;
     }
@@ -74,14 +73,14 @@ public class MessageFormatUtils {
 
     public static String generateTestDataMessage(TestDataHolder unitTestDataHolder) {
 
-            String inputXmlPayload = unitTestDataHolder.getInputXmlPayload();
-            String expectedPayload = unitTestDataHolder.getExpectedPayload();
-            String expectedPropVal = unitTestDataHolder.getExpectedPropVal();
-            String decodedInputXmlPayload = Base64.getEncoder().encodeToString(inputXmlPayload.getBytes());
-            String decodedExpectedPayload = Base64.getEncoder().encodeToString(expectedPayload.getBytes());
-            String decodedExpectedPropval = Base64.getEncoder().encodeToString(expectedPropVal.getBytes());
+        String inputXmlPayload = unitTestDataHolder.getInputXmlPayload();
+        String expectedPayload = unitTestDataHolder.getExpectedPayload();
+        String expectedPropVal = unitTestDataHolder.getExpectedPropVal();
+        String decodedInputXmlPayload = Base64.getEncoder().encodeToString(inputXmlPayload.getBytes());
+        String decodedExpectedPayload = Base64.getEncoder().encodeToString(expectedPayload.getBytes());
+        String decodedExpectedPropval = Base64.getEncoder().encodeToString(expectedPropVal.getBytes());
 
-            String testData = "|" + OPERATION + "-" + EXECUTETEST + "," + INPUTXMLPAYLOAD + "-" + decodedInputXmlPayload + "," + EXPECTEDPAYLOAD + "-" + decodedExpectedPayload + "," + EXPECTEDPROPVAL + "-" + decodedExpectedPropval + ",|";
+        String testData = "|" + OPERATION + "-" + EXECUTETEST + "," + INPUTXMLPAYLOAD + "-" + decodedInputXmlPayload + "," + EXPECTEDPAYLOAD + "-" + decodedExpectedPayload + "," + EXPECTEDPROPVAL + "-" + decodedExpectedPropval + ",|";
 
         return testData;
     }
