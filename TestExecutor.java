@@ -39,6 +39,7 @@ public class TestExecutor {
         String deploymentMessage = MessageFormatUtils.generateDeployMessage(uniTestDataHolder);
         String result = tcpClient.writeData(deploymentMessage);
         String message = MessageFormatUtils.getResultMessage(result);
+        log.info(message);
 
         if (message.equals("Artifact is deployed successfully")) {
 
@@ -56,6 +57,7 @@ public class TestExecutor {
         } else if (result.equals("Sequence is not deployed")) {
             log.info("Sequence not deployed");
         } else log.info("Deployment result not received:" + message);
+        tcpClient.closeResources();
     }
 }
 

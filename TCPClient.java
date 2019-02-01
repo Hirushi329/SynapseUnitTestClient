@@ -68,4 +68,15 @@ public class TCPClient {
 
     }
 
+    public void closeResources(){
+        try {
+
+            clientSocket.close();
+            bufferedReader.close();
+            printWriter.close();
+        } catch (IOException e){
+            log.error("Exception in closing resources");
+        }
+    }
+
 }
